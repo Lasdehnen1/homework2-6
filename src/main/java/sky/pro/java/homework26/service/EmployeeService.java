@@ -2,7 +2,9 @@ package sky.pro.java.homework26.service;
 
 import sky.pro.java.homework26.Employee;
 
-import java.util.List;
+
+import java.util.Collection;
+
 
 public interface EmployeeService {
 
@@ -13,6 +15,8 @@ public interface EmployeeService {
 
     Employee findEmployee(String firstName, String lastName);
 
-    List<Employee> showAll();
+
+
+    Collection<Employee> showAll();
 
 }

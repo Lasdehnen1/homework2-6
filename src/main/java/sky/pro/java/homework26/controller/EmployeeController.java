@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import sky.pro.java.homework26.Employee;
 import sky.pro.java.homework26.service.EmployeeService;
 
-import java.util.List;
+import java.util.Collection;
+
 
 @RequestMapping(path = "/employee")
 @RestController
@@ -36,8 +37,10 @@ public class EmployeeController {
                                  @RequestParam(value = "lastName") String lastName) {
         return employeeService.findEmployee(firstName, lastName);
     }
+
+
     @GetMapping
-    public List<Employee> showAll() {
+    public Collection<Employee> showAll() {
         return employeeService.showAll();
     }
 }

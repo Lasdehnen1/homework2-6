@@ -4,11 +4,14 @@ import java.util.Objects;
 
 public class Employee {
 
-
     private String firstName;
     private String lastName;
 
+
+
+
     public Employee(String firstName, String lastName) {
+
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -19,6 +22,10 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override
@@ -33,17 +40,12 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Employee employee = (Employee) o;
-
-        if (!Objects.equals(firstName, employee.firstName)) return false;
-        return Objects.equals(lastName, employee.lastName);
+        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        return result;
+        return Objects.hash(firstName, lastName);
     }
 }
