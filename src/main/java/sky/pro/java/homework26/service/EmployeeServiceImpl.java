@@ -1,21 +1,23 @@
 package sky.pro.java.homework26.service;
 
 import org.springframework.stereotype.Service;
-import sky.pro.java.homework26.Employee;
+import sky.pro.java.homework26.Department;
 import sky.pro.java.homework26.exception.EmployeeAlreadyAddedException;
 import sky.pro.java.homework26.exception.EmployeeNotFoundException;
 import sky.pro.java.homework26.exception.EmployeeStorageIsFullException;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private List<Employee> employees = new ArrayList<>();
-    private final int maxValue = 2;
+    private List<Department> employees = new ArrayList<>();
+
+    private final int maxValue = 10;
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
+    public Department addEmployee(String firstName, String lastName, int department, double salary) {
+        Department newEmployee = new Department(firstName, lastName, department, salary);
         if (employees.size() == maxValue) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
         }
@@ -27,28 +29,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee deleteEmployee(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
-        if (employees.contains(newEmployee)) {
-            employees.remove(newEmployee);
-        } else {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+    public Department deleteEmployee(String firstName, String lastName) {
+        Department newEmployee = findEmployee(firstName, lastName);
+        for (Department e : employees) {
+            if (e.equals(newEmployee)) {
+                employees.remove(e);
+                return e;
+            }
         }
         return newEmployee;
     }
 
+
     @Override
-    public Employee findEmployee(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
-        if (employees.contains(newEmployee)) {
-            return newEmployee;
-        } else {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
+    public Department findEmployee(String firstName, String lastName) {
+        Department employee = null;
+        for (Department e : employees) {
+            if (firstName.equals(e.getFirstName()) && lastName.equals(e.getLastName())) {
+                return e;
+            } else {
+                throw new EmployeeNotFoundException("Сотрудник не найден");
+            }
         }
+        return employee;
     }
 
     @Override
-    public List<Employee> showAll() {
+    public List<Department> showAll () {
         return employees;
     }
+
 }

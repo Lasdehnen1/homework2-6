@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sky.pro.java.homework26.Department;
 import sky.pro.java.homework26.Employee;
 import sky.pro.java.homework26.service.EmployeeService;
 
@@ -20,14 +21,17 @@ public class EmployeeController {
 
 
     @GetMapping(path = "/add")
-    public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
-                                @RequestParam(value = "lastName") String lastName) {
-        return employeeService.addEmployee(firstName, lastName);
+    public Department addEmployee(@RequestParam(value = "firstName") String firstName,
+                                @RequestParam(value = "lastName") String lastName,
+                                @RequestParam(value = "department") int department,
+                                @RequestParam(value = "salary") double salary) {
+        return employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping(path = "/remove")
     public Employee removeEmployee(@RequestParam(value = "firstName") String firstName,
                                    @RequestParam(value = "lastName") String lastName) {
+
         return employeeService.deleteEmployee(firstName, lastName);
     }
 
@@ -37,7 +41,7 @@ public class EmployeeController {
         return employeeService.findEmployee(firstName, lastName);
     }
     @GetMapping
-    public List<Employee> showAll() {
+    public List<Department> showAll() {
         return employeeService.showAll();
     }
 }
