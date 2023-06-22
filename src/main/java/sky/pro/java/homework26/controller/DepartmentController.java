@@ -9,6 +9,7 @@ import sky.pro.java.homework26.Employee;
 import sky.pro.java.homework26.service.DepartmentService;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RequestMapping(path = "/departments")
@@ -30,9 +31,13 @@ public class DepartmentController {
     public Employee minSalary(@RequestParam(value = "department") int departmentId) {
         return departmentService.minSalary(departmentId);
     }
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/by-departments")
     public List<Employee> listByDepartment(@RequestParam(value = "department") int departmentId) {
         return departmentService.listByDepartment(departmentId);
+    }
+    @GetMapping(path="/all")
+    public Map<Integer, List<Employee>> getAllByDepartment() {
+        return departmentService.getAllByDepartment();
     }
 
 
