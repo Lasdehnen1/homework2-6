@@ -5,9 +5,12 @@ import sky.pro.java.homework26.Department;
 import sky.pro.java.homework26.exception.EmployeeAlreadyAddedException;
 import sky.pro.java.homework26.exception.EmployeeNotFoundException;
 import sky.pro.java.homework26.exception.EmployeeStorageIsFullException;
+import sky.pro.java.homework26.exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -17,6 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Department addEmployee(String firstName, String lastName, int department, double salary) {
+        checkInput(firstName, lastName);
         Department newEmployee = new Department(firstName, lastName, department, salary);
         if (employees.size() == maxValue) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
@@ -30,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Department deleteEmployee(String firstName, String lastName) {
+        checkInput(firstName, lastName);
         Department newEmployee = findEmployee(firstName, lastName);
         for (Department e : employees) {
             if (e.equals(newEmployee)) {
@@ -43,6 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Department findEmployee(String firstName, String lastName) {
+        checkInput(firstName, lastName);
         Department employee = null;
         for (Department e : employees) {
             if (firstName.equals(e.getFirstName()) && lastName.equals(e.getLastName())) {
@@ -57,6 +63,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Department> showAll () {
         return employees;
+    }
+
+    private void checkInput(String firstName, String lastName) {
+        if(!(isAlpha(firstName) && isAlpha(lastName))) {
+            throw new InvalidInputException();
+        };
     }
 
 }
